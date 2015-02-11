@@ -17,7 +17,7 @@ import javax.swing.JFormattedTextField;
  *
  * @author vikash.loomba
  */
-public class Calculate {
+public class CalculateBill {
     //Instance Variables and constants
         static final double 
                 whiteBlack = 6.25,
@@ -27,5 +27,27 @@ public class Calculate {
                 DISCOUNT = 0.7;
         
     double total = 0.0;
+
+
+    
+    public double totalCalculation(boolean whiteBlackBox, boolean redWhiteBox, boolean blueBlackBox, double quantityWhite, double quantityRed, double quantityBlue)
+    {
+        if (whiteBlackBox)
+        
+            total+= (whiteBlack * quantityWhite);
+        if (redWhiteBox)
+            total+= (redWhite * quantityRed);
+        if (blueBlackBox)
+            total += (blueBlack * quantityBlue);
+            return total;
+    }
+    
+    public double diceTotals(double quantityBox, double dicePrice)
+    {
+        Double diceTotal = quantityBox * dicePrice;
+        return diceTotal;
+        
+    }
+
     
 }

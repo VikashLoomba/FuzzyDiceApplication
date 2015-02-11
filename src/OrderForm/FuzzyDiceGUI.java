@@ -39,6 +39,7 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
     List<String> cityList = new ArrayList<String>();
     List<String> stateList = new ArrayList<String>();
     List<String> zipList = new ArrayList<String>();
+    StringBuffer display = new StringBuffer();
     /**
      * Creates new form FuzzyDiceGUI
      */
@@ -150,13 +151,13 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         quantityLabel = new javax.swing.JLabel();
         priceLabel = new javax.swing.JLabel();
         whiteBlackCheckBox = new javax.swing.JCheckBox();
-        jTextField1 = new javax.swing.JTextField();
+        whiteBlackAmt = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         redWhiteCheckBox = new javax.swing.JCheckBox();
-        jTextField2 = new javax.swing.JTextField();
+        redWhiteAmt = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         blueBlackCheckBox = new javax.swing.JCheckBox();
-        jTextField3 = new javax.swing.JTextField();
+        blueBlackAmt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
@@ -347,8 +348,8 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         whiteBlackCheckBox.setText("White/Black");
         dicePanel.add(whiteBlackCheckBox);
 
-        jTextField1.setText("jTextField1");
-        dicePanel.add(jTextField1);
+        whiteBlackAmt.setText("jTextField1");
+        dicePanel.add(whiteBlackAmt);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("$6.25");
@@ -357,8 +358,8 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         redWhiteCheckBox.setText("Red/White");
         dicePanel.add(redWhiteCheckBox);
 
-        jTextField2.setText("jTextField2");
-        dicePanel.add(jTextField2);
+        redWhiteAmt.setText("jTextField2");
+        dicePanel.add(redWhiteAmt);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("$5.00");
@@ -367,8 +368,8 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         blueBlackCheckBox.setText("Blue/Black");
         dicePanel.add(blueBlackCheckBox);
 
-        jTextField3.setText("jTextField3");
-        dicePanel.add(jTextField3);
+        blueBlackAmt.setText("jTextField3");
+        dicePanel.add(blueBlackAmt);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("$7.50");
@@ -449,7 +450,7 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
                     .addComponent(infoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(displayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                    .addComponent(displayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
                     .addComponent(orderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(controlPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -476,9 +477,77 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void calculateJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateJButtonActionPerformed
-
+        String customerName = customerjComboBox.getSelectedItem().toString();
+        double quantityWhite = Double.parseDouble(whiteBlackAmt.getText());
+        double quantityRed = Double.parseDouble(redWhiteAmt.getText());
+        double quantityBlue = Double.parseDouble(blueBlackAmt.getText());
+        double total = 0.0;
+      // Display error message if no name entered or no box selected
+      if ( ( customerName.equals( "" ) ) || 
+           ( !whiteBlackCheckBox.isSelected() && 
+           !redWhiteCheckBox.isSelected() &&
+           !blueBlackCheckBox.isSelected() )
+         )
+      {
+         // display error message
+         JOptionPane.showMessageDialog( null,
+            "Please select a name and check at least one item.",
+            "Missing Information", JOptionPane.WARNING_MESSAGE );
+      }
+      else
+      {
+          CalculateBill set = new CalculateBill();
+          double whiteBlackTotal = set.diceTotals(quantityWhite, set.whiteBlack);
+          double redWhiteTotal = set.diceTotals(quantityRed, set.redWhite);
+          double blueBlackTotal = set.diceTotals(quantityBlue, set.blueBlack);
+          total = set.totalCalculation(whiteBlackCheckBox.isSelected(), redWhiteCheckBox.isSelected(),
+                  blueBlackCheckBox.isSelected(), quantityWhite, quantityRed, quantityBlue);
+          
+          //displayBill(customerName, total, )
+          
+          
+      }
+        
     }//GEN-LAST:event_calculateJButtonActionPerformed
-
+    
+        public void displayBill(String customerName, double total, String whiteBlackTotal, String redWhiteTotal, String blueBlackTotal)
+        {
+            if (whiteBlackCheckBox.isSelected())
+            {
+                display.append(padSpaces("White/Black Dice: ", whiteBlackTotal + "\n"));
+            }
+            if (redWhiteCheckBox.isSelected())
+            {           
+                display.append(padSpaces("Blue/Black Dice: ", redWhiteTotal + "\n"));
+            }    
+            if (blueBlackCheckBox.isSelected())
+            {
+                display.append(padSpaces("Blue/Black Dice: ", blueBlackTotal + "\n"));
+            }    
+            display.append("------------------------------------------------------------\n");
+            display.append(padSpaces("Total", dollars.format(sum) + '\n'));
+            
+            outJTextArea.setText(display.toString());
+            
+        }
+                
+        //Pads the spacing in the JTextArea
+            private StringBuffer padSpaces(String first, String second)
+        {
+            final int MAX = 35;
+            StringBuffer line = new StringBuffer(first);
+            //find number of spaces needed to pad the line
+            int numSpaces = MAX - first.length() - second.length();
+            
+            //Append spaces
+            for(int i = 0; i < numSpaces; i++)
+            {
+                line.append(" ");                 
+            }
+            //Append second String (price)
+            line.append(second);
+            return line;
+        }
     private void addressFormattedTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressFormattedTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addressFormattedTextFieldActionPerformed
@@ -559,6 +628,7 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField addressFormattedTextField;
     private javax.swing.JLabel addressLabel;
+    private javax.swing.JTextField blueBlackAmt;
     private javax.swing.JCheckBox blueBlackCheckBox;
     private javax.swing.JButton calculateJButton;
     private javax.swing.JFormattedTextField cityFormattedTextField;
@@ -581,9 +651,6 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JButton newJButton;
     private javax.swing.JPanel orderPanel;
@@ -592,11 +659,13 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
     private javax.swing.JButton printJButton;
     private javax.swing.JLabel quantityLabel;
     private javax.swing.JButton quitJButton;
+    private javax.swing.JTextField redWhiteAmt;
     private javax.swing.JCheckBox redWhiteCheckBox;
     private javax.swing.JComboBox shippingComboBox;
     private javax.swing.JFormattedTextField stateFormattedTextField;
     private javax.swing.JLabel stateLabel;
     private javax.swing.JLabel typeLabel;
+    private javax.swing.JTextField whiteBlackAmt;
     private javax.swing.JCheckBox whiteBlackCheckBox;
     private javax.swing.JFormattedTextField zipFormattedTextField;
     private javax.swing.JLabel zipLabel;
