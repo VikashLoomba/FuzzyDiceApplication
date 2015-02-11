@@ -42,9 +42,11 @@ public class CalculateBill {
             return total;
     }
     
-    public double diceTotals(double quantityBox, double dicePrice)
+    public String diceTotal(String quantityField, double dicePrice)
     {
-        Double diceTotal = quantityBox * dicePrice;
+        Double quantityBox = Double.parseDouble(quantityField);
+        Double diceTotals = quantityBox * dicePrice;
+        String diceTotal = diceTotals.toString();
         return diceTotal;
         
     }
