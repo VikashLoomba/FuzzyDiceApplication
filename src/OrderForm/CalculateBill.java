@@ -6,7 +6,7 @@
 
 package OrderForm;
 
-import static java.lang.Double.valueOf;
+
 
 /**
  *
@@ -27,12 +27,12 @@ public class CalculateBill {
     
     public double totalCalculation(boolean whiteBlackBox, boolean redWhiteBox, boolean blueBlackBox, String quantityWhite, String quantityRed, String quantityBlue)
     {
-        if (whiteBlackBox && !"".equals(quantityWhite))            
-            total+= (whiteBlack * valueOf(quantityWhite));
-        if (redWhiteBox && !"".equals(quantityRed))
-            total+= (redWhite * valueOf(quantityRed));
-        if (blueBlackBox && !"".equals(quantityBlue))
-            total += (blueBlack * valueOf(quantityBlue));
+        if (whiteBlackBox)            
+            total+= (whiteBlack * Double.parseDouble(quantityWhite));
+        if (redWhiteBox)
+            total+= (redWhite * Double.parseDouble(quantityRed));
+        if (blueBlackBox)
+            total += (blueBlack * Double.parseDouble(quantityBlue));
         return total;
     }
     

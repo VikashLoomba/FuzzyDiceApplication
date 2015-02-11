@@ -557,15 +557,15 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
     
         public void displayBill(String customerName, double total, CalculateBill set)
         {
-            if (whiteBlackCheckBox.isSelected())
+            if (whiteBlackCheckBox.isSelected() && !"".equals(whiteBlackAmt.getText()))
             {
                 display.append(padSpaces("White/Black Dice: ", dollars.format(set.diceTotal(whiteBlackAmt.getText(), set.whiteBlack)) + "\n"));
             }
-            if (redWhiteCheckBox.isSelected())
+            if (redWhiteCheckBox.isSelected() && !"".equals(redWhiteAmt.getText()))
             {           
                 display.append(padSpaces("Blue/Black Dice: ", dollars.format(set.diceTotal(redWhiteAmt.getText(), set.redWhite)) + "\n"));
             }    
-            if (blueBlackCheckBox.isSelected())
+            if (blueBlackCheckBox.isSelected() && !"".equals(blueBlackAmt.getText()))
             {
                 display.append(padSpaces("Blue/Black Dice: ", dollars.format(set.diceTotal(blueBlackAmt.getText(), set.blueBlack)) + "\n"));
             }    
