@@ -524,9 +524,14 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void displayJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayJButtonActionPerformed
+        //Get the customer selected as a string
         String customerName = customerjComboBox.getSelectedItem().toString();
-
-        double total = 0.0;
+        //Initialize variables
+        double total = 0.0,
+               whiteBlackTotal = 0.0,
+               redWhiteTotal = 0.0,
+               blueBlackTotal = 0.0; 
+        
       // Display error message if no name entered or no box selected
       if ( ( customerName.equals( "" ) ) || 
            ( !whiteBlackCheckBox.isSelected() && 
@@ -539,12 +544,17 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
             "Please select a name and check at least one item.",
             "Missing Information", JOptionPane.WARNING_MESSAGE );
       }
+      //Perform calculations if no errors
       else
       {
           CalculateBill set = new CalculateBill();
-          total = set.totalCalculation(whiteBlackCheckBox.isSelected(), redWhiteCheckBox.isSelected(),
-                  blueBlackCheckBox.isSelected(), whiteBlackAmt.getText(), redWhiteAmt.getText(), blueBlackAmt.getText());
-          totaljTextField.setText(valueOf(total));
+          whiteBlackTotal = set.diceTotal(whiteBlackAmt.getText(), 6.25);
+          redWhiteTotal = set.diceTotal(redWhiteAmt.getText(), 5.00);
+          blueBlackTotal = set.diceTotal(blueBlackAmt.getText(), 7.50);
+          System.out.print("White/Black Dice Total: " + whiteBlackTotal);
+          
+          total = set.totalCalculation(whiteBlackTotal, redWhiteTotal, blueBlackTotal);
+          
           displayBill(customerName, total, set);
           
           
@@ -576,7 +586,7 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         //Pads the spacing in the JTextArea
             private StringBuffer padSpaces(String first, String second)
         {
-            final int MAX = 35;
+            final int MAX = 50;
             StringBuffer line = new StringBuffer(first);
             //find number of spaces needed to pad the line
             int numSpaces = MAX - first.length() - second.length();

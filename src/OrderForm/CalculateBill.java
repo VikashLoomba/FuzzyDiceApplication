@@ -23,23 +23,25 @@ public class CalculateBill {
         
     double total = 0.0;
     
-    public double totalCalculation(boolean whiteBlackBox, boolean redWhiteBox, boolean blueBlackBox, String quantityWhite, String quantityRed, String quantityBlue)
+    public double totalCalculation(double whiteBlack, double redWhite, double blueBlack)
     {
-        if (whiteBlackBox = true)            
-            total+= (whiteBlack * Double.parseDouble(quantityWhite));
-        if (redWhiteBox = true)
-            total+= (redWhite * Double.parseDouble(quantityRed));
-        if (blueBlackBox = true)
-            total += (blueBlack * Double.parseDouble(quantityBlue));
+        total = whiteBlack + redWhite + blueBlack;
         return total;
     }
     
     public double diceTotal(String quantityField, double dicePrice)
     {
-        double quantityBox = Double.parseDouble(quantityField);
-        double diceTotals = quantityBox * dicePrice;
-        return diceTotals;
-        
+        if (!"".equals(quantityField))
+        {
+            double quantityBox = Double.parseDouble(quantityField);
+            double diceTotals = quantityBox * dicePrice;
+            return diceTotals;
+        }
+        else
+        {
+            return 0;
+        }
+
     }
 
     
