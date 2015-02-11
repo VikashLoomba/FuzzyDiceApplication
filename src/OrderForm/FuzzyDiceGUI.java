@@ -393,7 +393,6 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         totaljLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         totaljLabel.setText("Total:");
 
-        totaljTextField.setEditable(false);
         totaljTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         totaljTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -526,9 +525,7 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
 
     private void displayJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayJButtonActionPerformed
         String customerName = customerjComboBox.getSelectedItem().toString();
-        String quantityWhite = whiteBlackAmt.getText();
-        String quantityRed = redWhiteAmt.getText();
-        String quantityBlue = blueBlackAmt.getText();
+
         double total = 0.0;
       // Display error message if no name entered or no box selected
       if ( ( customerName.equals( "" ) ) || 
@@ -546,7 +543,7 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
       {
           CalculateBill set = new CalculateBill();
           total = set.totalCalculation(whiteBlackCheckBox.isSelected(), redWhiteCheckBox.isSelected(),
-                  blueBlackCheckBox.isSelected(), quantityWhite, quantityRed, quantityBlue);
+                  blueBlackCheckBox.isSelected(), whiteBlackAmt.getText(), redWhiteAmt.getText(), blueBlackAmt.getText());
           totaljTextField.setText(valueOf(total));
           displayBill(customerName, total, set);
           
@@ -557,15 +554,15 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
     
         public void displayBill(String customerName, double total, CalculateBill set)
         {
-            if (whiteBlackCheckBox.isSelected() && !"".equals(whiteBlackAmt.getText()))
+            if (whiteBlackCheckBox.isSelected())
             {
                 display.append(padSpaces("White/Black Dice: ", dollars.format(set.diceTotal(whiteBlackAmt.getText(), set.whiteBlack)) + "\n"));
             }
-            if (redWhiteCheckBox.isSelected() && !"".equals(redWhiteAmt.getText()))
+            if (redWhiteCheckBox.isSelected())
             {           
                 display.append(padSpaces("Blue/Black Dice: ", dollars.format(set.diceTotal(redWhiteAmt.getText(), set.redWhite)) + "\n"));
             }    
-            if (blueBlackCheckBox.isSelected() && !"".equals(blueBlackAmt.getText()))
+            if (blueBlackCheckBox.isSelected())
             {
                 display.append(padSpaces("Blue/Black Dice: ", dollars.format(set.diceTotal(blueBlackAmt.getText(), set.blueBlack)) + "\n"));
             }    

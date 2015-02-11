@@ -22,16 +22,14 @@ public class CalculateBill {
                 DISCOUNT = 0.7;
         
     double total = 0.0;
-
-
     
     public double totalCalculation(boolean whiteBlackBox, boolean redWhiteBox, boolean blueBlackBox, String quantityWhite, String quantityRed, String quantityBlue)
     {
-        if (whiteBlackBox)            
+        if (whiteBlackBox = true)            
             total+= (whiteBlack * Double.parseDouble(quantityWhite));
-        if (redWhiteBox)
+        if (redWhiteBox = true)
             total+= (redWhite * Double.parseDouble(quantityRed));
-        if (blueBlackBox)
+        if (blueBlackBox = true)
             total += (blueBlack * Double.parseDouble(quantityBlue));
         return total;
     }
