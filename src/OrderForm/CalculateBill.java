@@ -6,12 +6,7 @@
 
 package OrderForm;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
+import static java.lang.Double.valueOf;
 
 /**
  *
@@ -30,24 +25,22 @@ public class CalculateBill {
 
 
     
-    public double totalCalculation(boolean whiteBlackBox, boolean redWhiteBox, boolean blueBlackBox, double quantityWhite, double quantityRed, double quantityBlue)
+    public double totalCalculation(boolean whiteBlackBox, boolean redWhiteBox, boolean blueBlackBox, String quantityWhite, String quantityRed, String quantityBlue)
     {
-        if (whiteBlackBox)
-        
-            total+= (whiteBlack * quantityWhite);
-        if (redWhiteBox)
-            total+= (redWhite * quantityRed);
-        if (blueBlackBox)
-            total += (blueBlack * quantityBlue);
-            return total;
+        if (whiteBlackBox && quantityWhite != "")            
+            total+= (whiteBlack * valueOf(quantityWhite));
+        if (redWhiteBox && quantityRed != "")
+            total+= (redWhite * valueOf(quantityRed));
+        if (blueBlackBox && quantityBlue != "")
+            total += (blueBlack * valueOf(quantityBlue));
+        return total;
     }
     
-    public String diceTotal(String quantityField, double dicePrice)
+    public double diceTotal(String quantityField, double dicePrice)
     {
-        Double quantityBox = Double.parseDouble(quantityField);
-        Double diceTotals = quantityBox * dicePrice;
-        String diceTotal = diceTotals.toString();
-        return diceTotal;
+        double quantityBox = Double.parseDouble(quantityField);
+        double diceTotals = quantityBox * dicePrice;
+        return diceTotals;
         
     }
 
