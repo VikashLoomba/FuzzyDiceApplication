@@ -393,6 +393,7 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         totaljLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         totaljLabel.setText("Total:");
 
+        totaljTextField.setEditable(false);
         totaljTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         totaljTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -525,9 +526,9 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
 
     private void displayJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayJButtonActionPerformed
         String customerName = customerjComboBox.getSelectedItem().toString();
-        Double quantityWhite = Double.parseDouble(whiteBlackAmt.getText());
-        Double quantityRed = Double.parseDouble(redWhiteAmt.getText());
-        Double quantityBlue = Double.parseDouble(blueBlackAmt.getText());
+        String quantityWhite = whiteBlackAmt.getText();
+        String quantityRed = redWhiteAmt.getText();
+        String quantityBlue = blueBlackAmt.getText();
         double total = 0.0;
       // Display error message if no name entered or no box selected
       if ( ( customerName.equals( "" ) ) || 
