@@ -27,11 +27,11 @@ public class CalculateBill {
     
     public double totalCalculation(boolean whiteBlackBox, boolean redWhiteBox, boolean blueBlackBox, String quantityWhite, String quantityRed, String quantityBlue)
     {
-        if (whiteBlackBox && quantityWhite != "")            
+        if (whiteBlackBox && !"".equals(quantityWhite))            
             total+= (whiteBlack * valueOf(quantityWhite));
-        if (redWhiteBox && quantityRed != "")
+        if (redWhiteBox && !"".equals(quantityRed))
             total+= (redWhite * valueOf(quantityRed));
-        if (blueBlackBox && quantityBlue != "")
+        if (blueBlackBox && !"".equals(quantityBlue))
             total += (blueBlack * valueOf(quantityBlue));
         return total;
     }
