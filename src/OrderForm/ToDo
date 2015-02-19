@@ -1,0 +1,17 @@
+Fix:
+Whenever I clear and recalculate the previous invoice shows up 
+Help adding dynamic invoice
+Getting rid of unused fields
+
+Add:
+Javadocs
+Image to form (dices)
+DisplayBill fire on enter
+Constants in CalculateBill class need to be ALL CAPS
+Menu (see guidelines)
+Print method
+Clear quantity field if checkbox gets unchecked
+Empty event handlers code
+Select UPS Ground as default text for shipping combo box.
+Clear should clear check boxes, list box and disable text boxes—leave customer info intact.
+Tooltip and Icon
