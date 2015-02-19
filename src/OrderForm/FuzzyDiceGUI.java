@@ -166,7 +166,12 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         zipFormattedTextField.setEditable(false);
         zipFormattedTextField.setText("Customer State");
 
-        shippingComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "UPS Ground", "Fed-Ex", "USPS" }));
+        shippingComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "UPS Ground", "UPS 3 Day", "UPS Next Day" }));
+        shippingComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                shippingComboBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout customerPanelLayout = new javax.swing.GroupLayout(customerPanel);
         customerPanel.setLayout(customerPanelLayout);
@@ -268,6 +273,11 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         clearJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         clearJButton.setMnemonic('r');
         clearJButton.setText("Clear");
+        clearJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearJButtonActionPerformed(evt);
+            }
+        });
         controlPanel.add(clearJButton);
 
         quitJButton.setBackground(new java.awt.Color(255, 255, 204));
@@ -294,8 +304,14 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         dicePanel.add(priceLabel);
 
         whiteBlackCheckBox.setText("White/Black");
+        whiteBlackCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                whiteBlackCheckBoxActionPerformed(evt);
+            }
+        });
         dicePanel.add(whiteBlackCheckBox);
 
+        whiteBlackAmt.setEditable(false);
         whiteBlackAmt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 whiteBlackAmtActionPerformed(evt);
@@ -308,7 +324,14 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         dicePanel.add(jLabel1);
 
         redWhiteCheckBox.setText("Red/White");
+        redWhiteCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                redWhiteCheckBoxActionPerformed(evt);
+            }
+        });
         dicePanel.add(redWhiteCheckBox);
+
+        redWhiteAmt.setEditable(false);
         dicePanel.add(redWhiteAmt);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -316,7 +339,14 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         dicePanel.add(jLabel2);
 
         blueBlackCheckBox.setText("Blue/Black");
+        blueBlackCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blueBlackCheckBoxActionPerformed(evt);
+            }
+        });
         dicePanel.add(blueBlackCheckBox);
+
+        blueBlackAmt.setEditable(false);
         dicePanel.add(blueBlackAmt);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -468,8 +498,7 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void displayJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayJButtonActionPerformed
-    try{
-        double total = 0.0;
+
         String whiteBlackQ = (whiteBlackAmt.getText()),
                redWhiteQ = (redWhiteAmt.getText()),
                blueBlackQ = (blueBlackAmt.getText());
@@ -479,7 +508,9 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
            ( !whiteBlackCheckBox.isSelected() && 
            !redWhiteCheckBox.isSelected() &&
            !blueBlackCheckBox.isSelected() ));
- 
+        boolean clearForm = !outJTextArea.getText().equals("");
+        
+         
         
       // Display error message if no name entered or no box selected
       if (invalidInputs)
@@ -489,55 +520,81 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
             "Please select a name and check at least one item.",
             "Missing Information", JOptionPane.WARNING_MESSAGE );
       }
+//      else if (clearForm)
+//      {
+//          JOptionPane.showMessageDialog( null,
+//            "Please clear the form.",
+//            "Invoice present", JOptionPane.WARNING_MESSAGE );
+//      }
       //Perform calculations if no errors
       else
       {
           //Increment order number
           orderNumber++;
-          //JavaDocs
-          double whiteBlackTotal = set.diceTotal(whiteBlackQ, 6.25);
-          double redWhiteTotal = set.diceTotal(redWhiteQ, 5.00);
-          double blueBlackTotal = set.diceTotal(blueBlackQ, 7.50);
-          //Code check
-
-          
-          total = set.totalCalculation(whiteBlackTotal, redWhiteTotal, blueBlackTotal);
-          
-          displayBill(customerName, total, set);
+          //JavaDocs                    
+          displayBill(customerName, set);
           
           orderjTextField.setText(String.valueOf(orderNumber));
           
       }
-        }
-        catch(NumberFormatException nume)
-        {
-        JOptionPane.showMessageDialog(null, 
-                "Please enter a positive integer greater 0 for your selected quantity",
-                "Input Error", JOptionPane.WARNING_MESSAGE);
-        }
+        
+
     }//GEN-LAST:event_displayJButtonActionPerformed
-    
-        public void displayBill(String customerName, double total, CalculateBill set)
+
+        public void displayBill(String customerName, CalculateBill set)
         {
+            int totalQuantity = 0;
+        try{    
             display.append(padSpaces("Customer", customerName + '\n'));
             display.append('\n');
-            if (whiteBlackCheckBox.isSelected())
-            {
-                display.append(padSpaces("White/Black Dice: ", dollars.format(set.diceTotal(whiteBlackAmt.getText(), set.whiteBlack)) + "\n"));
+            if (whiteBlackCheckBox.isSelected()){
+            
+                if (!"".equals(whiteBlackAmt.getText()))
+                    {
+                        int whiteBlackQ = Integer.parseInt(whiteBlackAmt.getText());
+                        totalQuantity += whiteBlackQ;
+                        display.append(padSpaces("White/Black Dice: ", dollars.format(set.diceTotal(whiteBlackQ, set.whiteBlack)) + "\n"));
+                    }
             }
-            if (redWhiteCheckBox.isSelected())
-            {           
-                display.append(padSpaces("Blue/Black Dice: ", dollars.format(set.diceTotal(redWhiteAmt.getText(), set.redWhite)) + "\n"));
-            }    
-            if (blueBlackCheckBox.isSelected())
+            if (redWhiteCheckBox.isSelected()) {
+               
+               if (!"".equals(redWhiteAmt.getText()))
+                {           
+                    int redWhiteQ = Integer.parseInt(redWhiteAmt.getText());
+                    totalQuantity += redWhiteQ;
+                    display.append(padSpaces("Red/White Dice: ", dollars.format(set.diceTotal(redWhiteQ, set.redWhite)) + "\n"));
+                }
+            }
+            if (blueBlackCheckBox.isSelected()) {                
+                if (!"".equals(blueBlackAmt.getText()))
+                {
+                    int blueBlackQ = Integer.parseInt(blueBlackAmt.getText());
+                    totalQuantity += blueBlackQ;
+                    display.append(padSpaces("Blue/Black Dice: ", dollars.format(set.diceTotal(blueBlackQ, set.blueBlack)) + "\n"));
+                }
+            }
+            if (shippingComboBox != null)
             {
-                display.append(padSpaces("Blue/Black Dice: ", dollars.format(set.diceTotal(blueBlackAmt.getText(), set.blueBlack)) + "\n"));
-            }    
+                set.shippingCharge(shippingComboBox, totalQuantity);
+            }
+        }
+        catch (NumberFormatException nume)
+                {
+                // display error message
+         JOptionPane.showMessageDialog( null,
+            "Please make sure a valid integer was entered in Quantity Field",
+            "Invalid Input", JOptionPane.WARNING_MESSAGE );
+                } 
+        
+            display.append(padSpaces("Subtotal", dollars.format(set.subtotal) + '\n'));
+            display.append(padSpaces("Discount", dollars.format(set.discount()) + '\n'));
+            display.append(padSpaces("Tax", dollars.format(set.taxAmt()) + '\n'));
+            display.append(padSpaces("Shipping", dollars.format(set.shippingCharge) + '\n'));           
             display.append("------------------------------------------------------------\n");
-            display.append(padSpaces("Total", dollars.format(total) + '\n'));
+            display.append(padSpaces("Total", dollars.format(set.total()) + '\n'));
             
             outJTextArea.setText(display.toString());
-            
+
         }
                 
         //Pads the spacing in the JTextArea
@@ -557,6 +614,7 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
             line.append(second);
             return line;
         }
+            
     private void addressFormattedTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressFormattedTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addressFormattedTextFieldActionPerformed
@@ -609,7 +667,53 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
 
     private void whiteBlackAmtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_whiteBlackAmtActionPerformed
         // TODO add your handling code here:
+        displayJButtonActionPerformed(evt);
     }//GEN-LAST:event_whiteBlackAmtActionPerformed
+
+    private void shippingComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shippingComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_shippingComboBoxActionPerformed
+
+    private void clearJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearJButtonActionPerformed
+        // Uncheck boxes
+        whiteBlackCheckBox.setSelected(false);
+        redWhiteCheckBox.setSelected(false);
+        blueBlackCheckBox.setSelected(false);
+        // Clear fields
+        whiteBlackAmt.setText("");
+        redWhiteAmt.setText("");
+        blueBlackAmt.setText("");
+        totaljTextField.setText("");
+        outJTextArea.setText("");
+        
+    }//GEN-LAST:event_clearJButtonActionPerformed
+
+    private void whiteBlackCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_whiteBlackCheckBoxActionPerformed
+        // TODO add your handling code here:
+        if (whiteBlackCheckBox.isEnabled())
+        {
+            whiteBlackAmt.setEditable(true);
+        }
+        
+    }//GEN-LAST:event_whiteBlackCheckBoxActionPerformed
+
+    private void redWhiteCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redWhiteCheckBoxActionPerformed
+        // TODO add your handling code here:
+        if (redWhiteCheckBox.isEnabled())
+        {
+            redWhiteAmt.setEditable(true);
+        }        
+    }//GEN-LAST:event_redWhiteCheckBoxActionPerformed
+
+    private void blueBlackCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blueBlackCheckBoxActionPerformed
+        // TODO add your handling code here:
+        if (blueBlackCheckBox.isEnabled())
+        {
+            blueBlackAmt.setEditable(true);
+        }
+        
+        
+    }//GEN-LAST:event_blueBlackCheckBoxActionPerformed
 
     /**
      * @param args the command line arguments

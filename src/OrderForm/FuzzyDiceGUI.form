@@ -243,11 +243,14 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
                 <StringItem index="0" value="UPS Ground"/>
-                <StringItem index="1" value="Fed-Ex"/>
-                <StringItem index="2" value="USPS"/>
+                <StringItem index="1" value="UPS 3 Day"/>
+                <StringItem index="2" value="UPS Next Day"/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="shippingComboBoxActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -345,6 +348,9 @@
             <Property name="mnemonic" type="int" value="114"/>
             <Property name="text" type="java.lang.String" value="Clear"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearJButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="quitJButton">
           <Properties>
@@ -423,8 +429,14 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="White/Black"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="whiteBlackCheckBoxActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="whiteBlackAmt">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="whiteBlackAmtActionPerformed"/>
               </Events>
@@ -439,8 +451,14 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Red/White"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="redWhiteCheckBoxActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="redWhiteAmt">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
@@ -452,8 +470,14 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Blue/Black"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blueBlackCheckBoxActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="blueBlackAmt">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
