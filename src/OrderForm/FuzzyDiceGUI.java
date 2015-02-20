@@ -122,7 +122,10 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         printMenuItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         exitMenuItem = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        actionMenu = new javax.swing.JMenu();
+        displayMenuItem = new javax.swing.JMenuItem();
+        newMenuItem = new javax.swing.JMenuItem();
+        aboutMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("FuzzyDice Application");
@@ -458,8 +461,8 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
             infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(infoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         fileMenu.setText("File");
@@ -484,8 +487,25 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
 
         fuzzyDicejMenuBar.add(fileMenu);
 
-        jMenu2.setText("Edit");
-        fuzzyDicejMenuBar.add(jMenu2);
+        actionMenu.setText("Action");
+
+        displayMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        displayMenuItem.setText("Display Bill");
+        actionMenu.add(displayMenuItem);
+
+        newMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        newMenuItem.setText("New Order");
+        actionMenu.add(newMenuItem);
+
+        fuzzyDicejMenuBar.add(actionMenu);
+
+        aboutMenu.setText("About");
+        aboutMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutMenuActionPerformed(evt);
+            }
+        });
+        fuzzyDicejMenuBar.add(aboutMenu);
 
         setJMenuBar(fuzzyDicejMenuBar);
 
@@ -786,6 +806,11 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
         printJButtonActionPerformed(evt);
     }//GEN-LAST:event_printMenuItemActionPerformed
 
+    private void aboutMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuActionPerformed
+        // TODO add your handling code here:
+        AboutJFrame about = new AboutJFrame();
+    }//GEN-LAST:event_aboutMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -823,6 +848,8 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu aboutMenu;
+    private javax.swing.JMenu actionMenu;
     private javax.swing.JFormattedTextField addressFormattedTextField;
     private javax.swing.JLabel addressLabel;
     private javax.swing.JTextField blueBlackAmt;
@@ -838,6 +865,7 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
     private javax.swing.JPanel dicePanel;
     private javax.swing.JButton displayJButton;
     private javax.swing.JScrollPane displayJScrollPane;
+    private javax.swing.JMenuItem displayMenuItem;
     private javax.swing.JPanel displayPanel;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
@@ -847,12 +875,12 @@ public class FuzzyDiceGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton newJButton;
+    private javax.swing.JMenuItem newMenuItem;
     private javax.swing.JPanel orderPanel;
     private javax.swing.JPanel orderTotalPanel;
     private javax.swing.JLabel orderjLabel;
