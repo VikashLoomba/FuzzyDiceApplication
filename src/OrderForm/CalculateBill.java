@@ -23,21 +23,36 @@ import javax.swing.*;
 public class CalculateBill {
     //Instance Variables and constants
         static final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
+                //Dice Amountsstatic final double
                 //Dice Amounts
-                whiteBlack = 6.25,
-                redWhite = 5.00,
-                blueBlack = 7.50,
+                WHITEBLACK = 6.25,
+                REDWHITE = 5.00,
+                BLUEBLACK = 7.50,
                 //Tax and Discount Amount
                 TAX = 0.0825,
                 DISCOUNT = 0.07,
                 //Shipping Charges
-                UPSGround = 2.95,
-                UPSThree = 6.95,
-                UPSNextDay = 15.95,
-                TwentyItems = 0.0;
-             double shippingCharge = 0.0;   
-             double subtotal = 0.0;
-             double discountAmt = -0.0;
+                UPSGROUND = 2.95,
+                UPSTHREE = 6.95,
+                UPSNEXTDAY = 15.95,
+                TWENTYITEMS = 0.0;
+             double SHIPPINGCHARGE = 0.0;   
+             double SUBTOTAL = 0.0;
+             double DISCOUNTAMT = -0.0;
 
 
 
@@ -52,22 +67,22 @@ public class CalculateBill {
     // Javadocs
     public double taxAmt()
     {
-        double tax = (subtotal - (discountAmt * -1)) * TAX;
+        double tax = (SUBTOTAL - (DISCOUNTAMT * -1)) * TAX;
         return tax;
     }
     // Javadocs
     public double discount()
     {
-        if (subtotal > 500)
+        if (SUBTOTAL >= 500)
         {
-            discountAmt = subtotal * (DISCOUNT * -1);
+            DISCOUNTAMT = SUBTOTAL * (DISCOUNT * -1);
         }
-            return discountAmt;
+            return DISCOUNTAMT;
     }
     //JavaDocs
     public double total()
     {
-        double total = subtotal + shippingCharge - (discountAmt * -1);
+        double total = SUBTOTAL + SHIPPINGCHARGE - (DISCOUNTAMT * -1);
         double tax = taxAmt();
         total += tax;
         return total;
@@ -75,13 +90,11 @@ public class CalculateBill {
     //JavaDocs
     public double diceTotal(int quantityField, double dicePrice)
     {
-        if (quantityField != 0)
-        {
+
             double diceTotals = quantityField * dicePrice;
-            subtotal += diceTotals;
-            return subtotal;
-        }
-        else return 0;
+            SUBTOTAL += diceTotals;
+            return SUBTOTAL;
+        
     }
     //JavaDocs
     public void readCustomersFile(JComboBox customerjComboBox) 
@@ -140,23 +153,23 @@ public class CalculateBill {
     public double shippingCharge(JComboBox shippingComboBox, int quantity)
     {
         String shipType = (String) shippingComboBox.getSelectedItem();
-        if (quantity > 20)
+        if (quantity >= 20)
         {
-            shippingCharge = 0;
+            SHIPPINGCHARGE = 0;
         }
         else if (shipType.equals("UPS Ground"))
         {
-            shippingCharge += UPSGround;
+            SHIPPINGCHARGE = UPSGROUND;
         }
         else if (shipType.equals("UPS 3 Day"))
         {
-            shippingCharge += UPSThree;
+            SHIPPINGCHARGE = UPSTHREE;
         }
         else if (shipType.equals("UPS Next Day"))
         {
-            shippingCharge += UPSNextDay;
+            SHIPPINGCHARGE = UPSNEXTDAY;
         }
-        return shippingCharge;
+        return SHIPPINGCHARGE;
         
     }
 
